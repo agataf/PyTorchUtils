@@ -6,6 +6,7 @@ Symmetric 3d U-Net implemented in PyTorch
 (Optional)
 Factorized 3D convolution
 Extra residual connections
++ downsampling and upsampling layer (Agata)
 
 Nicholas Turner <nturner@cs.princeton.edu>, 2017
 Based on an architecture by
@@ -184,6 +185,8 @@ class Model(nn.Module):
     # are added with setattr calls
     # slightly obscured by U3D methods
 
+    # TODO: insert downsampling here         
+
     # Contracting pathway
     for d in range(depth):
       fs = nfeatures[d]
@@ -204,12 +207,15 @@ class Model(nn.Module):
       ks = sizes[d]
       self.add_deconv_mod(d, D_in, fs, bn, ks)
       D_in = fs
+   
 
     # Output feature embedding without batchnorm
     self.embedconv = Conv(D_in, D_in, ks, st=(1,1,1))
 
     # Output by spec
     self.outputdeconv = OutputModule(D_in, output_spec, ks=io_size, st=io_stride)
+
+    # TODO: insert upsampling here      
 
 
   def add_conv_mod(self, depth, D_in, D_out, ks, bn):
