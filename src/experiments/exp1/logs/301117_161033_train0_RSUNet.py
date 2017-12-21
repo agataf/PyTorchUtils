@@ -44,7 +44,7 @@ class ConvMod(nn.Module):
 
   def __init__(self, D_in, D_out, ks, activation=F.elu,
                fact=factorize, resid=residual, 
-               bn=True, momentum=0.001):
+               bn=True, momentum=0.999):
    
     nn.Module.__init__(self) 
     st = (1,1,1)

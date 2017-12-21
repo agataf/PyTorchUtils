@@ -91,9 +91,8 @@ def make_forward_scanner(dset_name, data_dir, input_spec,
     """ Creates a DataProvider ForwardScanner from a dset name """
 
     # Reading EM image
-#    img = utils.read_h5(dset_name)
-    print("image path", os.path.join(data_dir, dset_name + "_img.h5"))
-    img = utils.read_h5(os.path.join(data_dir, dset_name + "_img.h5"))
+    img = utils.read_h5(dset_name)
+#    img = utils.read_h5(os.path.join(data_dir, dset_name + "_img.h5"))
     img = (img / 255.).astype("float32")
 
     # Creating DataProvider Dataset

@@ -44,7 +44,7 @@ class Sampler(object):
       for dset in dsets:
         vdp.add_dataset( self.build_dataset(datadir, spec, dset) )
 
-      vdp.set_sampling_weights([0.5, 0.1, 0.1, 0.1, 0.1])
+      vdp.set_sampling_weights()
 
       vdp.set_augmentor(self._aug(mode))
       vdp.set_postprocessor(self._post())
@@ -56,17 +56,17 @@ class Sampler(object):
 
       print(dset_name)
       img = read_file(os.path.join(datadir, dset_name + "_img.h5"))
-      psd = read_file(os.path.join(datadir, dset_name + "_mit.h5")).astype("float32")
-#      seg = read_file(os.path.join(datadir, dset_name + "_seg.h5"))
+      psd = read_file(os.path.join(datadir, dset_name + "_syn.h5")).astype("float32")
+      seg = read_file(os.path.join(datadir, dset_name + "_seg.h5"))
 
       img = dp.transform.divideby(img, val=255.0, dtype="float32")
       psd[psd != 0] = 1 #Binarizing psds
-#     msk = (seg == 0).astype("float32") #Boundary mask
+      msk = (seg == 0).astype("float32") #Boundary mask
 
       vd = dp.VolumeDataset()
       vd.add_raw_data(key="input",      data=img)
       vd.add_raw_data(key="psd_label",  data=psd)
-#    vd.add_raw_data(key="psd_mask",   data=msk)
+      vd.add_raw_data(key="psd_mask",   data=msk)
 
       vd.set_spec(spec)
       return vd
