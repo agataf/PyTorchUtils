@@ -16,15 +16,10 @@ import h5py
 import numpy as np
 
 def resize_image(img, resize):
-    img1 = np.zeros((img.shape[0], img.shape[1]/resize, img.shape[2]/resize))
+    img_new = np.zeros((img.shape[0], img.shape[1]/resize, img.shape[2]/resize))
     for i in range(img.shape[0]):
-        print("img1.shape", img1.shape)
-        resized = misc.imresize(img[i,:,:], 1.0/resize, interp="bilinear")
-        print("resized.shape", resized.shape)
-        img1[i,:,:] = misc.imresize(img[i,:,:], 1.0/resize, interp="bilinear")
-#     else:
-#         img = misc.imresize(img, 1.0/resize, interp="bilinear")
-    return img
+        img_new[i,:,:] = misc.imresize(img[i,:,:], 1.0/resize, interp="bilinear")
+    return img_new
 
 
 def make_required_dirs(model_dir, log_dir, fwd_dir, **params):
