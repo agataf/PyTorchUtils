@@ -215,6 +215,8 @@ class Model(nn.Module):
     # Output by spec
     self.outputdeconv = OutputModule(D_in, output_spec, ks=io_size, st=io_stride)
 
+    m = nn.Upsample(scale_factor=(1,2,2), mode='bilinear')
+    self.outputdeconv = m(self.outputdeconv)
     # TODO: insert upsampling here      
 
 
