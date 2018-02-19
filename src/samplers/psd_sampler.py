@@ -64,12 +64,7 @@ class Sampler(object):
       
       psd[psd != 0] = 1 #Binarizing psds
       if (resize != 1):
-            print("Image type:", type(img))
-            print("Image size:", img.shape)
-            #img1 = misc.imresize(img[0,:,:], 1.0/resize, interp="bilinear")
             img = utils.resize_image(img, resize)
-            print("Image type:", type(img))
-            print("Resized size:", img.shape)
           #psd = scipy.misc.imresize(psd, 1.0/resize, interp="bilinear")
 #     msk = (seg == 0).astype("float32") #Boundary mask
 
