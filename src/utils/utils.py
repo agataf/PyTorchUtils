@@ -13,6 +13,7 @@ from scipy import misc
 import os, re, shutil
 import datetime
 import h5py
+import numpy as np
 
 def resize_image(img, resize):
     if len(img.shape) > 2:
