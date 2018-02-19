@@ -34,7 +34,7 @@ def main(**args):
 
 
 def fill_params(expt_name, chkpt_num, batch_sz, lr, gpus,
-                sampler_fname, model_fname, **args):
+                sampler_fname, model_fname, resample, **args):
 
     params = {}
 
