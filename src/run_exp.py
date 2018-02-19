@@ -108,7 +108,7 @@ def start_training(model_class, model_args, model_kwargs, chkpt_num,
                                                mode="train", resize = params["resize"]))
 
     val_sampler   = utils.AsyncSampler(Sampler(data_dir, dsets=val_sets,
-                                               mode="val", params = params["params"]))
+                                               mode="val", params = params["resize"]))
 
     loss_fn = loss.BinomialCrossEntropyWithLogits()
     optimizer = torch.optim.Adam( net.parameters(), lr=lr )
