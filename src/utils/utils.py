@@ -16,7 +16,7 @@ import h5py
 
 def resize_image(img, resize):
     if len(img.shape) > 2:
-        for i in img.shape[0]:
+        for i in range(img.shape[0]):
             img[i,:,:] = misc.imresize(img[i,:,:], 1.0/resize, interp="bilinear")
     else:
         img = misc.imresize(img, 1.0/resize, interp="bilinear")
