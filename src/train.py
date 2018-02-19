@@ -50,8 +50,8 @@ def train(model, loss_fn, optimizer, sampler, val_sampler=None, last_iter=0,
 
         #Running forward pass
         preds = model(*inputs)
-        if (params["resample_rate"] != 1):
-          preds = scipy.misc.imresize(preds, 1.0*resample_rate, interp="bilinear")
+        if (params["resize"] != 1):
+          preds = scipy.misc.imresize(preds, 1.0*params["resize"], interp="bilinear")
 
         losses, nmsks = eval_error(preds, labels, masks, loss_fn, sample_spec)
 
