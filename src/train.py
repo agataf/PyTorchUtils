@@ -9,6 +9,7 @@ Nicholas Turner <nturner@cs.princeton.edu>, 2017
 import numpy as np
 import os
 import time
+from scipy import misc
 
 
 import torch
@@ -49,6 +50,8 @@ def train(model, loss_fn, optimizer, sampler, val_sampler=None, last_iter=0,
 
         #Running forward pass
         preds = model(*inputs)
+        if (params["resample_rate"] != 1):
+          preds = scipy.misc.imresize(preds, 1.0*resample_rate, interp="bilinear")
 
         losses, nmsks = eval_error(preds, labels, masks, loss_fn, sample_spec)
 
@@ -225,6 +228,7 @@ def run_validation(model, sampler, num_iters, loss_fn, sample_spec, monitor, ite
 
         #Running forward pass
         preds = model(*inputs)
+         # TODO: UPSAMPLE HERE
 
         losses, nmsks = eval_error(preds, labels, masks, loss_fn, sample_spec)
 
