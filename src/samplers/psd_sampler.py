@@ -66,7 +66,7 @@ class Sampler(object):
       psd[psd != 0] = 1 #Binarizing psds
       if (resample_rate != 1):
           img = scipy.misc.imresize(img, 1.0/resample_rate, interp="bilinear")
-          psd = scipy.misc.imresize(psd, 1.0/resample_rate, interp="bilinear")
+          #psd = scipy.misc.imresize(psd, 1.0/resample_rate, interp="bilinear")
 #     msk = (seg == 0).astype("float32") #Boundary mask
 
       vd = dp.VolumeDataset()
