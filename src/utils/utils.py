@@ -16,11 +16,7 @@ import h5py
 import numpy as np
 
 def resize_image(img, resize):
-    print("img.shape", img.shape)
-    print("img.shape[0]", img.shape[0])
-    print("img.shape[1]", img.shape[1])
-    print("img.shape[2]", img.shape[2])
-    img1 = np.array((img.shape[0], img.shape[1]/resize, img.shape[2]/resize))
+    img1 = np.zeros((img.shape[0], img.shape[1]/resize, img.shape[2]/resize))
     for i in range(img.shape[0]):
         print("img1.shape", img1.shape)
         resized = misc.imresize(img[i,:,:], 1.0/resize, interp="bilinear")
