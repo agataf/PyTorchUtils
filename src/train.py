@@ -15,10 +15,6 @@ from scipy import misc
 import torch
 from torch import autograd
 
-
-import utils
-
-
 required_params = ["max_iter","test_intv","test_iter",
                    "avgs_intv","chkpt_intv","expt_dir",
                    "model_dir","log_dir","batch_size",
