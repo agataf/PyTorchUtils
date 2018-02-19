@@ -51,9 +51,10 @@ def fill_params(expt_name, chkpt_num, batch_sz, lr, gpus,
     params["test_iter"]   = 100
     params["avgs_intv"]   = 50
     params["chkpt_intv"]  = 10000
-    params["warm_up"]      = 50
+    params["warm_up"]     = 50
     params["chkpt_num"]   = chkpt_num
     params["batch_size"]  = batch_sz
+    params["resample"]    = resample
 
     #Sampling params
     params["data_dir"]     = os.path.expanduser("~/seungmount/research/agataf/datasets/pinky_all")
@@ -104,10 +105,10 @@ def start_training(model_class, model_args, model_kwargs, chkpt_num,
     #DataProvider Sampler
     Sampler = params["sampler_class"]
     train_sampler = utils.AsyncSampler(Sampler(data_dir, dsets=train_sets,
-                                               mode="train"))
+                                               mode="train", resample = params["resample"]))
 
     val_sampler   = utils.AsyncSampler(Sampler(data_dir, dsets=val_sets,
-                                               mode="val"))
+                                               mode="val", resample = params["resample"]))
 
     loss_fn = loss.BinomialCrossEntropyWithLogits()
     optimizer = torch.optim.Adam( net.parameters(), lr=lr )
@@ -134,6 +135,8 @@ if __name__ == "__main__":
                         help="Checkpoint Number")
     parser.add_argument("--gpus", default=["0"], nargs="+")
     parser.add_argument("--lr", type=float, default=0.001)
+    parser.add_argument("--resample", type=int, default=1,
+                       help="How many times to resample the input?")
     args = parser.parse_args()
 
 
