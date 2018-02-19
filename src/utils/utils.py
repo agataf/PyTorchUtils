@@ -14,6 +14,14 @@ import os, re, shutil
 import datetime
 import h5py
 
+def resize_image(img, resize):
+    if len(img.shape) > 2:
+        for i in img.shape[0]:
+            img[i,:,:] = misc.imresize(img[i,:,:], 1.0/resize, interp="bilinear")
+    else:
+        img = misc.imresize(img, 1.0/resize, interp="bilinear")
+    return img
+
 
 def make_required_dirs(model_dir, log_dir, fwd_dir, **params):
 
@@ -121,13 +129,5 @@ def write_h5(data, fname):
     with h5py.File(fname) as f:
         f.create_dataset("/main",data=data)
  
-def resize_image(img, resize):
-    if len(img.shape) > 2:
-        for i in img.shape[0]:
-            img[i,:,:] = misc.imresize(img[i,:,:], 1.0/resize, interp="bilinear")
-    else:
-        img = misc.imresize(img, 1.0/resize, interp="bilinear")
-    return img
-#     if img.shapefor i in range(img.shape[2])
 
 
