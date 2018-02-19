@@ -8,7 +8,7 @@ Nicholas Turner <nturner@cs.princeton.edu>, 2017
 
 import torch
 from torch.autograd import Variable
-
+from scipy import misc
 
 import os, re, shutil
 import datetime
