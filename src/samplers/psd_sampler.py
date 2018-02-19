@@ -9,6 +9,7 @@ import os
 
 import dataprovider as dp
 import h5py
+from scipy import misc
 
 def read_file(fname):
 
@@ -29,20 +30,21 @@ class Sampler(object):
 
       volnames = ["input","psd_label","psd_mask"]
       spec = { name : patchsz for name in volnames }
+      resample_rate = resample
 
-      self.dp = self.build_data_provider(datadir, spec, mode, dsets)
+      self.dp = self.build_data_provider(datadir, spec, mode, dsets, resample_rate)
 
 
     def __call__(self, **kwargs):
       return self.dp("random", **kwargs)
 
 
-    def build_data_provider(self, datadir, spec, mode, dsets):
+    def build_data_provider(self, datadir, spec, mode, dsets, resample_rate):
 
       vdp = dp.VolumeDataProvider()
 
       for dset in dsets:
-        vdp.add_dataset( self.build_dataset(datadir, spec, dset) )
+        vdp.add_dataset( self.build_dataset(datadir, spec, dset, resample_rate) )
 
       vdp.set_sampling_weights([0.5, 0.1, 0.1, 0.1, 0.1])
 
@@ -52,7 +54,7 @@ class Sampler(object):
       return vdp
 
 
-    def build_dataset(self, datadir, spec, dset_name):
+    def build_dataset(self, datadir, spec, dset_name, resample_rate):
 
       print(dset_name)
       img = read_file(os.path.join(datadir, dset_name + "_img.h5"))
@@ -60,7 +62,11 @@ class Sampler(object):
 #      seg = read_file(os.path.join(datadir, dset_name + "_seg.h5"))
 
       img = dp.transform.divideby(img, val=255.0, dtype="float32")
+      
       psd[psd != 0] = 1 #Binarizing psds
+      if (resample_rate != 1):
+          img = scipy.misc.imresize(img, 1.0/resample_rate, interp="bilinear")
+          psd = scipy.misc.imresize(psd, 1.0/resample_rate, interp="bilinear")
 #     msk = (seg == 0).astype("float32") #Boundary mask
 
       vd = dp.VolumeDataset()
