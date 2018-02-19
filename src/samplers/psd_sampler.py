@@ -66,9 +66,9 @@ class Sampler(object):
       if (resize != 1):
             print("Image type:", type(img))
             print("Image size:", img.shape)
-            img = misc.imresize(img, 1.0/resize, interp="bilinear")
-            print("Image type:", type(img))
-            print("Resized size:", img.shape)
+            img1 = misc.imresize(img[:,:,0], 1.0/resize, interp="bilinear")
+            print("Image type:", type(img1))
+            print("Resized size:", img1.shape)
           #psd = scipy.misc.imresize(psd, 1.0/resize, interp="bilinear")
 #     msk = (seg == 0).astype("float32") #Boundary mask
 
