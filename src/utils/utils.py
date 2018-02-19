@@ -17,7 +17,7 @@ import numpy as np
 
 def resize_image(img, resize):
     if len(img.shape) > 2:
-        img1 = np.array((img.shape[0]/resize, img.shape[1]/resize, img.shape[2]/resize))
+        img1 = np.array((img.shape[0], img.shape[1]/resize, img.shape[2]/resize))
         for i in range(img.shape[0]):
             img1[i,:,:] = misc.imresize(img[i,:,:], 1.0/resize, interp="bilinear")
     else:
