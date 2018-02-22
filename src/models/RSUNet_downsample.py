@@ -272,7 +272,7 @@ class Model(nn.Module):
     x = self.embedconv(x)
     
     upsample = getattr(self, "upsample")
-    x = self.upsample(x)
+    x = upsample(x)
 
     return self.outputdeconv(x)
 
