@@ -222,8 +222,8 @@ class Model(nn.Module):
     #self.outputdeconv = m(self.outputdeconv)
     # TODO: insert upsampling here      
 
-  def add_upsample_mod(self, scale_factor, mode):
-    setattr(self, "upsample{}",
+  def add_upsample_mod(self, scale_factor=(1,2,2), mode='bilinear'):
+    setattr(self, "upsample",
             nn.Upsample(scale_factor, mode))      
 
   def add_conv_mod(self, depth, D_in, D_out, ks, bn):
@@ -270,6 +270,9 @@ class Model(nn.Module):
 
     # Output feature embedding without batchnorm
     x = self.embedconv(x)
+    
+    upsample = getattr(self, "upsample")
+    x = self.upsample(x)
 
     return self.outputdeconv(x)
 
