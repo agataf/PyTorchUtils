@@ -224,7 +224,7 @@ class Model(nn.Module):
 
   def add_upsample_mod(self, scale_factor=(1,2,2), mode='bilinear'):
     setattr(self, "upsample",
-            nn.Upsample(scale_factor, mode))      
+            nn.Upsample(scale_factor=scale_factor, mode=mode))      
 
   def add_conv_mod(self, depth, D_in, D_out, ks, bn):
 
