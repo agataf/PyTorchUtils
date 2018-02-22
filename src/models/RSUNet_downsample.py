@@ -223,7 +223,7 @@ class Model(nn.Module):
     # TODO: insert upsampling here      
 
   def add_upsample_mod(self, scale_factor, mode):
-    setattr(self, "upsample{}".format(depth),
+    setattr(self, "upsample{}",
             nn.Upsample(scale_factor, mode))      
 
   def add_conv_mod(self, depth, D_in, D_out, ks, bn):
