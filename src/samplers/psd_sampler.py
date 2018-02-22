@@ -63,15 +63,15 @@ class Sampler(object):
       img = dp.transform.divideby(img, val=255.0, dtype="float32")
       
       psd[psd != 0] = 1 #Binarizing psds
-      if (resize != 1):
-            img = utils.resize_image(img, resize)
-          #psd = scipy.misc.imresize(psd, 1.0/resize, interp="bilinear")
-#     msk = (seg == 0).astype("float32") #Boundary mask
+      #if (resize != 1):
+      #     img = utils.resize_image(img, resize)
+      #     psd = scipy.misc.imresize(psd, 1.0/resize, interp="bilinear")
+      #     msk = (seg == 0).astype("float32") #Boundary mask
 
       vd = dp.VolumeDataset()
       vd.add_raw_data(key="input",      data=img)
       vd.add_raw_data(key="psd_label",  data=psd)
-#    vd.add_raw_data(key="psd_mask",   data=msk)
+      # vd.add_raw_data(key="psd_mask",   data=msk)
 
       vd.set_spec(spec)
       return vd
