@@ -221,6 +221,10 @@ class Model(nn.Module):
     #m = nn.Upsample(scale_factor=(1,2,2), mode='bilinear')
     #self.outputdeconv = m(self.outputdeconv)
     # TODO: insert upsampling here      
+         
+  def add_downsample_mod(self, scale_factor=(1,2,2), mode='trilinear'):
+    setattr(self, "upsample",
+            nn.Downsample(scale_factor=scale_factor, mode=mode))      
 
   def add_upsample_mod(self, scale_factor=(1,2,2), mode='trilinear'):
     setattr(self, "upsample",
