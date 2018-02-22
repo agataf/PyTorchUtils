@@ -216,13 +216,13 @@ class Model(nn.Module):
     self.outputdeconv = OutputModule(D_in, output_spec, ks=io_size, st=io_stride)
     print("type of self.outputdeconv", type(self.outputdeconv))
          
-    self.add_upsample_mod(scale_factor=(1,1,2,2), mode='bilinear')
+    self.add_upsample_mod(scale_factor=(1,2,2), mode='trilinear')
 
     #m = nn.Upsample(scale_factor=(1,2,2), mode='bilinear')
     #self.outputdeconv = m(self.outputdeconv)
     # TODO: insert upsampling here      
 
-  def add_upsample_mod(self, scale_factor=(1,1,2,2), mode='bilinear'):
+  def add_upsample_mod(self, scale_factor=(1,2,2), mode='trilinear'):
     setattr(self, "upsample",
             nn.Upsample(scale_factor=scale_factor, mode=mode))      
 
