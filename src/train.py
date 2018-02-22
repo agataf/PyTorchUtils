@@ -41,7 +41,7 @@ def train(model, loss_fn, optimizer, sampler, val_sampler=None, last_iter=0,
 
         # Make sure no mask is empty (data for all tasks)
         sample = fetch_nonempty_sample(sampler, mask_names, params['batch_size'])
-        print("sample type, size in training loop", type(sample))
+        print("sample type, size in training loop", type(sample), sample.get(sample.keys()[0]).shape)
         inputs, labels, masks = make_variables(sample, sample_spec, "train")
 
         #Running forward pass
