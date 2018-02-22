@@ -56,6 +56,7 @@ def train(model, loss_fn, optimizer, sampler, val_sampler=None, last_iter=0,
         losses, nmsks = eval_error(preds, labels, masks, loss_fn, sample_spec)
 
         update_model(optimizer, losses)
+        print("updated model and didn't crash")
 
         log_errors(monitor, losses, nmsks)
 
