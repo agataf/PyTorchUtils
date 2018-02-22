@@ -46,9 +46,12 @@ def train(model, loss_fn, optimizer, sampler, val_sampler=None, last_iter=0,
 
         #Running forward pass
         preds = model(*inputs)
+        
+        
         if (params["resize"] != 1):
           print("Type of Preds[0]:", type(preds[0]))
           preds = misc.imresize(preds, 1.0*params["resize"], interp="bilinear")
+          print("Resized!")
 
         losses, nmsks = eval_error(preds, labels, masks, loss_fn, sample_spec)
 
