@@ -224,7 +224,8 @@ def run_validation(model, sampler, num_iters, loss_fn, sample_spec, monitor, ite
 
         #Make sure no mask is empty (data for all tasks)
         sample = fetch_nonempty_sample(sampler, mask_names)
-        print("sample type, size in validation loop", type(sample))
+        print("sample type, size in validation loop", type(sample), sample.get(sample.keys()[0]).shape)
+        
 
         inputs, labels, masks = make_variables(sample, sample_spec, "test")
 
