@@ -227,7 +227,7 @@ class Model(nn.Module):
          
   def add_downsample_mod(self, scale_factor=(1,2,2), mode='trilinear'):
     setattr(self, "upsample",
-            nn.AvgPool3d((1,2,2))  
+            nn.AvgPool3d((1,2,2)))  
 
   def add_upsample_mod(self, scale_factor=(1,2,2), mode='trilinear'):
     setattr(self, "upsample",
