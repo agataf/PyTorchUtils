@@ -176,6 +176,9 @@ class Model(nn.Module):
     # D_in represents the input dimension (#feature maps) 
     # in most pytorch docs. I'll follow that convention here
 
+    # Downsample input
+    self.add_downsample_mod(scale_factor=(1,2,2), mode='trilinear')     
+        
     # Input feature embedding without batchnorm
     fs = nfeatures[0]
     self.inputconv = Conv(D_in, fs, io_size, st=io_stride)
