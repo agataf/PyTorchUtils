@@ -226,7 +226,7 @@ class Model(nn.Module):
     # TODO: insert upsampling here      
          
   def add_downsample_mod(self, scale_factor=(1,2,2), mode='trilinear'):
-    setattr(self, "upsample",
+    setattr(self, "downsample",
             nn.AvgPool3d((1,2,2)))  
 
   def add_upsample_mod(self, scale_factor=(1,2,2), mode='trilinear'):
@@ -252,6 +252,9 @@ class Model(nn.Module):
 
 
   def forward(self, x):
+         
+    downsample = getattr(self, "downsample")
+    x = downsample(x)
 
     # Input feature embedding without batchnorm
     x = self.inputconv(x)
