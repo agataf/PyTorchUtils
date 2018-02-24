@@ -59,8 +59,8 @@ def fill_params(expt_name, chkpt_num, batch_sz, lr, gpus,
     #Sampling params
     params["data_dir"]     = os.path.expanduser("~/seungmount/research/agataf/datasets/pinky_all")
     assert os.path.isdir(params["data_dir"]),"nonexistent data directory"
-    params["train_sets"]   = ["vol19-34_train", "vol401_train", "vol501_train", "vol502_train", "vol503_train", "vol101_train", "vol102_train", "vol103_train", "vol104_train"]
-    params["val_sets"]     = ["vol19-34_val", "vol401_val", "vol501_val", "vol502_val", "vol503_val", "vol101_val", "vol102_val", "vol103_val", "vol104_val"]
+    params["train_sets"]   = ["vol19-34_train", "vol401_train", "vol501_train", "vol502_train", "vol503_train", "vol104_train", "vol102_train", "vol103_train", "vol101_train"]
+    params["val_sets"]     = ["vol19-34_val", "vol401_val", "vol501_val", "vol502_val", "vol503_val", "vol104_val", "vol102_val", "vol103_val", "vol101_val"]
 
     #GPUS
     params["gpus"] = gpus
