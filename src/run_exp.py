@@ -34,7 +34,7 @@ def main(**args):
 
 
 def fill_params(expt_name, chkpt_num, batch_sz, lr, gpus,
-                sampler_fname, model_fname, resize, **args):
+                sampler_fname, model_fname, resize, erode, **args):
 
     params = {}
 
@@ -59,8 +59,14 @@ def fill_params(expt_name, chkpt_num, batch_sz, lr, gpus,
     #Sampling params
     params["data_dir"]     = os.path.expanduser("~/seungmount/research/agataf/datasets/pinky_all")
     assert os.path.isdir(params["data_dir"]),"nonexistent data directory"
-    params["train_sets"]   = ["vol19-34_train", "vol401_train", "vol501_train", "vol502_train", "vol503_train", "vol104_train", "vol103_train", "vol102_train", "vol101_train"]
-    params["val_sets"]     = ["vol19-34_val", "vol401_val", "vol501_val", "vol502_val", "vol503_val"]
+    train_vol_list = ["vol19-34_train", "vol401_train", "vol501_train", "vol502_train", "vol503_train", "vol104_train", "vol103_train", "vol102_train", "vol101_train"]
+    val_vol_list = ["vol19-34_val", "vol401_val", "vol501_val", "vol502_val", "vol503_val"]
+    if erode:
+        params["train_sets"]   = [el+"_3eroded" for el in train_vol_list]
+        params["val_sets"]   = [el+"_3eroded" for el in val_vol_list]
+    else:
+        params["train_sets"]   = train_vol_list
+        params["val_sets"]   = val_vol_list
 
     #GPUS
     params["gpus"] = gpus
@@ -135,6 +141,7 @@ if __name__ == "__main__":
                         help="Checkpoint Number")
     parser.add_argument("--gpus", default=["0"], nargs="+")
     parser.add_argument("--lr", type=float, default=0.001)
+    parser.add_argument("--erode", type=bool, default=False)
     parser.add_argument("--resize", type=int, default=1,
                        help="How many times to resize the input?")
     args = parser.parse_args()
