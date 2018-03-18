@@ -62,8 +62,8 @@ def fill_params(expt_name, chkpt_num, batch_sz, lr, gpus,
     train_vol_list = ["vol19-34_train",  "vol101_train", "vol102_train", "vol103_train", "vol104_train", "vol401_train", "vol501_train", "vol502_train", "vol503_train"]
     val_vol_list = ["vol19-34_val", "vol401_val", "vol501_val", "vol502_val", "vol503_val"]
     if erode:
-        params["train_sets"]   = [el+"_3eroded" for el in train_vol_list]
-        params["val_sets"]   = [el+"_3eroded" for el in val_vol_list]
+        params["train_sets"]   = [el+"_1eroded" for el in train_vol_list]
+        params["val_sets"]   = [el+"_1eroded" for el in val_vol_list]
     else:
         params["train_sets"]   = train_vol_list
         params["val_sets"]   = val_vol_list
