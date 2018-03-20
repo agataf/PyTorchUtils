@@ -34,7 +34,7 @@ def main(**args):
 
 
 def fill_params(expt_name, chkpt_num, batch_sz, lr, gpus,
-                sampler_fname, model_fname, resize, erode, **args):
+                sampler_fname, model_fname, erode, **args):
 
     params = {}
 
@@ -54,7 +54,6 @@ def fill_params(expt_name, chkpt_num, batch_sz, lr, gpus,
     params["warm_up"]     = 50
     params["chkpt_num"]   = chkpt_num
     params["batch_size"]  = batch_sz
-    params["resize"]    = resize
 
     #Sampling params
     params["data_dir"]     = os.path.expanduser("~/seungmount/research/agataf/datasets/pinky_all")
@@ -143,8 +142,6 @@ if __name__ == "__main__":
     parser.add_argument("--gpus", default=["0"], nargs="+")
     parser.add_argument("--lr", type=float, default=0.001)
     parser.add_argument("--erode", type=bool, default=False)
-    parser.add_argument("--resize", type=int, default=1,
-                       help="How many times to resize the input?")
     args = parser.parse_args()
 
 
