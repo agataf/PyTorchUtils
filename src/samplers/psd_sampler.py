@@ -28,7 +28,7 @@ class Sampler(object):
 
       datadir = os.path.expanduser(datadir)
 
-      volnames = ["input","mit1_label","mit2_label","mit3_label","mit4_label","mit_mask"]
+      volnames = ["input","mit0_label","mit1_label","mit2_label","mit3_label","mit_mask"]
       spec = { name : patchsz for name in volnames }
 
       self.dp = self.build_data_provider(datadir, spec, mode, dsets)
@@ -58,18 +58,22 @@ class Sampler(object):
 
       print(dset_name)
       img = read_file(os.path.join(datadir, dset_name + "_img.h5"))
+      mit0 = read_file(os.path.join(datadir, dset_name + "_mit.h5")).astype("float32")
       mit1 = read_file(os.path.join(datadir, dset_name + "_1eroded_mit.h5")).astype("float32")
       mit2 = read_file(os.path.join(datadir, dset_name + "_2eroded_mit.h5")).astype("float32")
       mit3 = read_file(os.path.join(datadir, dset_name + "_3eroded_mit.h5")).astype("float32")
 #      seg = read_file(os.path.join(datadir, dset_name + "_seg.h5"))
 
       img = dp.transform.divideby(img, val=255.0, dtype="float32")
-      
+    
+      mit0[mit0 != 0] = 1 #Binarizing psds
       mit1[mit1 != 0] = 1 #Binarizing psds
       mit2[mit2 != 0] = 1 #Binarizing psds
+      mit3[mit3 != 0] = 1 #Binarizing psds
 
       vd = dp.VolumeDataset()
       vd.add_raw_data(key="input",      data=img)
+      vd.add_raw_data(key="mit0_label",       data=mit0)
       vd.add_raw_data(key="mit1_label",       data=mit1)
       vd.add_raw_data(key="mit2_label",       data=mit2)
       vd.add_raw_data(key="mit3_label",       data=mit3)
