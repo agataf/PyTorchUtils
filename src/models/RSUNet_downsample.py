@@ -157,6 +157,8 @@ class OutputModule(nn.Module):
     for (name,d_out) in outspec.items():
       setattr(self, name, layers.Conv(D_in, d_out, ks, st, pd, bias=True))
       self.output_layers.append(name)
+    print("length of outspec items", len(outspec.items()))
+    print("output_layers", self.output_layers)
 
 
   def forward(self, x):
