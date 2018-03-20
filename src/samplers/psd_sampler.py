@@ -28,7 +28,7 @@ class Sampler(object):
 
       datadir = os.path.expanduser(datadir)
 
-      volnames = ["input","psd_label","psd_mask"]
+      volnames = ["input","mit1_label","mit2_label", "mit_mask"]
       spec = { name : patchsz for name in volnames }
 
       self.dp = self.build_data_provider(datadir, spec, mode, dsets)
@@ -69,8 +69,8 @@ class Sampler(object):
 
       vd = dp.VolumeDataset()
       vd.add_raw_data(key="input",      data=img)
-      vd.add_raw_data(key="mit1",       data=mit1)
-      vd.add_raw_data(key="mit2",       data=mit2)
+      vd.add_raw_data(key="mit1_label",       data=mit1)
+      vd.add_raw_data(key="mit2_label",       data=mit2)
       # vd.add_raw_data(key="psd_mask",   data=msk)
 
       vd.set_spec(spec)
