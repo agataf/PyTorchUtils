@@ -22,7 +22,7 @@ def read_file(fname):
 
 class Sampler(object):
 
-    def __init__(self, datadir, dsets=[], mode="train", patchsz=(16,320,320), resize=1):
+    def __init__(self, datadir, dsets=[], mode="train", patchsz=(16,320,320)):
 
       assert mode in ["train","val","test"]
 
@@ -31,19 +31,19 @@ class Sampler(object):
       volnames = ["input","psd_label","psd_mask"]
       spec = { name : patchsz for name in volnames }
 
-      self.dp = self.build_data_provider(datadir, spec, mode, dsets, resize)
+      self.dp = self.build_data_provider(datadir, spec, mode, dsets)
 
 
     def __call__(self, **kwargs):
       return self.dp("random", **kwargs)
 
 
-    def build_data_provider(self, datadir, spec, mode, dsets, resize):
+    def build_data_provider(self, datadir, spec, mode, dsets):
 
       vdp = dp.VolumeDataProvider()
 
       for dset in dsets:
-        vdp.add_dataset( self.build_dataset(datadir, spec, dset, resize) )
+        vdp.add_dataset( self.build_dataset(datadir, spec, dset) )
       if mode == "train":
           vdp.set_sampling_weights([0.5, 0.1, 0.025, 0.1, 0.1, 0.025, 0.025, 0.025, 0.1])
       if mode == "val":
@@ -54,7 +54,7 @@ class Sampler(object):
       return vdp
 
 
-    def build_dataset(self, datadir, spec, dset_name, resize):
+    def build_dataset(self, datadir, spec, dset_name):
 
       print(dset_name)
       img = read_file(os.path.join(datadir, dset_name + "_img.h5"))
