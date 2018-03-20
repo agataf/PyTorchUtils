@@ -28,7 +28,7 @@ class Sampler(object):
 
       datadir = os.path.expanduser(datadir)
 
-      volnames = ["input","mit1_label","mit2_label", "mit_mask"]
+      volnames = ["input","mit1_label","mit2_label","mit3_label","mit4_label","mit_mask"]
       spec = { name : patchsz for name in volnames }
 
       self.dp = self.build_data_provider(datadir, spec, mode, dsets)
@@ -60,6 +60,7 @@ class Sampler(object):
       img = read_file(os.path.join(datadir, dset_name + "_img.h5"))
       mit1 = read_file(os.path.join(datadir, dset_name + "_1eroded_mit.h5")).astype("float32")
       mit2 = read_file(os.path.join(datadir, dset_name + "_2eroded_mit.h5")).astype("float32")
+      mit3 = read_file(os.path.join(datadir, dset_name + "_3eroded_mit.h5")).astype("float32")
 #      seg = read_file(os.path.join(datadir, dset_name + "_seg.h5"))
 
       img = dp.transform.divideby(img, val=255.0, dtype="float32")
@@ -71,6 +72,7 @@ class Sampler(object):
       vd.add_raw_data(key="input",      data=img)
       vd.add_raw_data(key="mit1_label",       data=mit1)
       vd.add_raw_data(key="mit2_label",       data=mit2)
+      vd.add_raw_data(key="mit3_label",       data=mit3)
       # vd.add_raw_data(key="psd_mask",   data=msk)
 
       vd.set_spec(spec)
