@@ -159,6 +159,7 @@ class OutputModule(nn.Module):
       self.output_layers.append(name)
     print("length of outspec items", len(outspec.items()))
     print("output_layers", self.output_layers)
+    print("outspec", outspec)
 
 
   def forward(self, x):
