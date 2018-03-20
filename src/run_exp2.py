@@ -40,7 +40,7 @@ def fill_params(expt_name, chkpt_num, batch_sz, lr, gpus,
 
     #Model params
     params["in_dim"]       = 1
-    params["output_spec"]  = collections.OrderedDict(psd_label=2)
+    params["output_spec"]  = collections.OrderedDict(mit1_label=1, mit2_label=2)
     params["depth"]        = 4
     params["batch_norm"]   = True
 
