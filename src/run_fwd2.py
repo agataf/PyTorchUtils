@@ -44,7 +44,7 @@ def fill_params(expt_name, chkpt_num, gpus,
 
     #Model params
     params["in_dim"]      = 1
-    params["output_spec"]  = collections.OrderedDict([mit0_label=1,mit1_label=2, mit2_label=3, mit3_label=4])
+    params["output_spec"]  = collections.OrderedDict(mit0_label=1,mit1_label=2, mit2_label=3, mit3_label=4)
     params["depth"]       = 4
     params["batch_norm"]  = not(nobn)
     params["activation"]  = F.sigmoid
