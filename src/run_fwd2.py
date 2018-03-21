@@ -44,7 +44,7 @@ def fill_params(expt_name, chkpt_num, gpus,
 
     #Model params
     params["in_dim"]      = 1
-    params["output_spec"] = collections.OrderedDict(psd_label=1)
+    params["output_spec"]  = collections.OrderedDict(mit0_label=1,mit1_label=2, mit2_label=3, mit3_label=4)
     params["depth"]       = 4
     params["batch_norm"]  = not(nobn)
     params["activation"]  = F.sigmoid
@@ -67,8 +67,8 @@ def fill_params(expt_name, chkpt_num, gpus,
                             "~/seungmount/research/agataf/datasets/pinky_all")
     assert os.path.isdir(params["data_dir"]),"nonexistent data directory"
     params["dsets"]       = dset_names
-    params["input_spec"]  = collections.OrderedDict(input=(18,160,160)) #dp dataset spec
-    params["scan_spec"]   = collections.OrderedDict(psd=(1,18,160,160))
+    params["input_spec"]  = collections.OrderedDict(input=(16,320,320)) #dp dataset spec
+    params["scan_spec"]   = collections.OrderedDict(psd=(1,16,320,320))
     params["scan_params"] = dict(stride=(0.5,0.5,0.5), blend="bump")
 
     #Use-specific Module imports
@@ -91,8 +91,9 @@ def make_forward_scanner(dset_name, data_dir, input_spec,
     """ Creates a DataProvider ForwardScanner from a dset name """
 
     # Reading EM image
-    img = utils.read_h5(dset_name)
-#    img = utils.read_h5(os.path.join(data_dir, dset_name + "_img.h5"))
+#    img = utils.read_h5(dset_name)
+    print("image path", os.path.join(data_dir, dset_name + "_img.h5"))
+    img = utils.read_h5(os.path.join(data_dir, dset_name + "_img.h5"))
     img = (img / 255.).astype("float32")
 
     # Creating DataProvider Dataset
