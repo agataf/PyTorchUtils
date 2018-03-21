@@ -44,7 +44,7 @@ def fill_params(expt_name, chkpt_num, gpus,
 
     #Model params
     params["in_dim"]      = 1
-    params["output_spec"]  = collections.OrderedDict(mit0_label=1,mit1_label=2, mit2_label=3, mit3_label=4)
+    params["output_spec"]  = collections.OrderedDict([mit0_label=1,mit1_label=2, mit2_label=3, mit3_label=4])
     params["depth"]       = 4
     params["batch_norm"]  = not(nobn)
     params["activation"]  = F.sigmoid
@@ -68,7 +68,7 @@ def fill_params(expt_name, chkpt_num, gpus,
     assert os.path.isdir(params["data_dir"]),"nonexistent data directory"
     params["dsets"]       = dset_names
     params["input_spec"]  = collections.OrderedDict(input=(16,320,320)) #dp dataset spec
-    params["scan_spec"]   = collections.OrderedDict(img0=(4,16,320,320), img1=(3,16,320,320), img2=(2,16,320,320), img3=(1,16,320,320))
+    params["scan_spec"]   = collections.OrderedDict([img0=(4,16,320,320), img1=(3,16,320,320), img2=(2,16,320,320), img3=(1,16,320,320)])
     params["scan_params"] = dict(stride=(0.5,0.5,0.5), blend="bump")
 
     #Use-specific Module imports
