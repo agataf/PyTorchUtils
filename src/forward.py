@@ -27,7 +27,7 @@ def forward(net, scanner, scan_spec, activation=None):
         inputs = make_variables(inputs)
 
         outputs = run_forward_pass(net, inputs, activation)
-        print("shape of outputs", len(outputs))
+        #print("shape of outputs", len(outputs))
 
         push_outputs(scanner, outputs, scan_spec)
 
@@ -56,9 +56,9 @@ def run_forward_pass(net, inputs, activation=None):
 def push_outputs(scanner, outputs, scan_spec):
 
     fmt_outputs = {}
-    print("scan spec keys", scan_spec.keys())
+    #print("scan spec keys", scan_spec.keys())
     for (i,k) in enumerate(scan_spec.keys()):
-        print("extract data shape", extract_data(outputs[i]).shape)
+        #print("extract data shape", extract_data(outputs[i]).shape)
         fmt_outputs[k] = extract_data(outputs[i])
 
     scanner.push(fmt_outputs)
