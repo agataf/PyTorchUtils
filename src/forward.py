@@ -27,8 +27,9 @@ def forward(net, scanner, scan_spec, activation=None):
         inputs = make_variables(inputs)
 
         outputs = run_forward_pass(net, inputs, activation)
-        print("type of outputs", type(outputs))
+        print("type of outputs", type(outputs[0]))
         print("shape of outputs", len(outputs))
+        print("shape of outputs", outputs[0].shape)
 
         push_outputs(scanner, outputs, scan_spec)
 
