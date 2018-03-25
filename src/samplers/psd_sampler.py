@@ -63,11 +63,7 @@ class Sampler(object):
 
       img = dp.transform.divideby(img, val=255.0, dtype="float32")
     
-      mit0[mit0 != 0] = 1 #Binarizing psds
-      mit1[mit1 != 0] = 1 #Binarizing psds
-      mit2[mit2 != 0] = 1 #Binarizing psds
-      mit3[mit3 != 0] = 1 #Binarizing psds
-
+      mit0[psd != 0] = 1 #Binarizing psds
       vd = dp.VolumeDataset()
       vd.add_raw_data(key="input",      data=img)
       vd.add_raw_data(key="psd_label",  data=psd)
