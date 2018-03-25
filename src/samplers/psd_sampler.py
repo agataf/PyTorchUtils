@@ -58,15 +58,15 @@ class Sampler(object):
 
       print(dset_name)
       img = read_file(os.path.join(datadir, dset_name + "_img.h5"))
-      mit0 = read_file(os.path.join(datadir, dset_name + "_mit.h5")).astype("float32")
+      mit = read_file(os.path.join(datadir, dset_name + "_mit.h5")).astype("float32")
 #      seg = read_file(os.path.join(datadir, dset_name + "_seg.h5"))
 
       img = dp.transform.divideby(img, val=255.0, dtype="float32")
     
-      mit0[psd != 0] = 1 #Binarizing psds
+      mit[mit != 0] = 1 #Binarizing psds
       vd = dp.VolumeDataset()
       vd.add_raw_data(key="input",      data=img)
-      vd.add_raw_data(key="psd_label",  data=psd)
+      vd.add_raw_data(key="psd_label",  data=mit)
       # vd.add_raw_data(key="psd_mask", data=msk)
 
       vd.set_spec(spec)
