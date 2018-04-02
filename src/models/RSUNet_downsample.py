@@ -191,8 +191,6 @@ class Model(nn.Module):
     # are added with setattr calls
     # slightly obscured by U3D methods
 
-    # TODO: insert downsampling here         
-
     # Contracting pathway
     for d in range(depth):
       fs = nfeatures[d]
@@ -223,10 +221,6 @@ class Model(nn.Module):
     print("type of self.outputdeconv", type(self.outputdeconv))
          
     self.add_upsample_mod(scale_factor=(1,2,2), mode='trilinear')
-
-    #m = nn.Upsample(scale_factor=(1,2,2), mode='bilinear')
-    #self.outputdeconv = m(self.outputdeconv)
-    # TODO: insert upsampling here      
          
   def add_downsample_mod(self, scale_factor=(1,2,2), mode='trilinear'):
     setattr(self, "downsample",
