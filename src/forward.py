@@ -62,6 +62,7 @@ def push_outputs(scanner, outputs, scan_spec, intermediate):
     if intermediate:
         for k in outputs.keys():
             #print("extract data shape", extract_data(outputs[i]).shape)
+            print(k)
             fmt_outputs[k] = extract_data(outputs[k])
     else:
         for (i,k) in enumerate(scan_spec.keys()):
