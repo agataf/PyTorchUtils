@@ -61,9 +61,6 @@ def run_forward_pass(net, inputs, activation=None):
     outputs = net(*inputs)
     print(outputs.keys())
 
-    if activation is not None:
-        outputs.values() = list(map( activation, outputs.values() ))
-
     return outputs
 
 def push_outputs(scanner, outputs, scan_spec):
