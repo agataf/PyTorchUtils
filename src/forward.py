@@ -25,10 +25,10 @@ def forward(net, scanner, scan_spec, intermediate=False, activation=None):
           break
 
         inputs = make_variables(inputs)
-        #if intermediate:
-        #    outputs = run_forward_intermediate(net, inputs, activation)
-        #else:
-        outputs = run_forward_pass(net, inputs, activation)
+        if intermediate:
+            outputs = run_forward_intermediate(net, inputs, activation)
+        else:
+            outputs = run_forward_pass(net, inputs, activation)
         print("in forward, type of outputs", type(outputs))
         #print("in forward, output[0]", outputs[0])
         
@@ -56,12 +56,13 @@ def run_forward_pass(net, inputs, activation=None):
 
     return outputs
 
-def run_forward_intermediate(net, inputs, activation=None):
+def run_forward_pass(net, inputs, activation=None):
     
-    outputs = net.forward_intermediate(*inputs)
+    outputs = net(*inputs)
+    print(outputs.keys())
 
     if activation is not None:
-        outputs = list(map( activation, outputs ))
+        outputs.values() = list(map( activation, outputs.values() ))
 
     return outputs
 
