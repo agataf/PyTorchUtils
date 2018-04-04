@@ -107,16 +107,16 @@ def make_forward_scanner(dset_name, data_dir, input_spec,
 
 def save_output(output, dset_name, chkpt_num, fwd_dir, output_tag, **params):
     """ Saves the volumes within a DataProvider ForwardScanner """
-    for k in output.outputs.data.iterkeys():
+    for k in output.keys():
         #print(type(output.outputs))
         #print(output.outputs.keys())
         print(k)
-        output_data = output.outputs.get_data(k)
+        output_data = output['k']
 
         if len(output_tag) == 0:
-            basename = "{}_{}_{}.h5".format(dset_name, k, chkpt_num)
+            basename = "{}_{}_{}.h5".format("golden", k, chkpt_num)
         else:
-            basename = "{}_{}_{}_{}.h5".format(dset_name, k, 
+            basename = "{}_{}_{}_{}.h5".format("golden", k, 
                                                chkpt_num, output_tag)
 
         full_fname = os.path.join( fwd_dir, basename )
