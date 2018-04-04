@@ -72,5 +72,5 @@ def push_outputs(scanner, outputs, scan_spec, intermediate):
 
 
 def extract_data(expanded_variable):
-    print(type(expanded_variable))
+    print(expanded_variable)
     return np.squeeze( expanded_variable.data.cpu().numpy(), axis=(0,) )
