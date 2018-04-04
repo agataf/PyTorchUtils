@@ -14,7 +14,7 @@ import numpy as np
 import utils
 
 
-def forward(net, scanner, scan_spec, activation=None):
+def forward(net, scanner, scan_spec, intermediate=False, activation=None):
 
     start = time.time()
     while True:
@@ -25,8 +25,10 @@ def forward(net, scanner, scan_spec, activation=None):
           break
 
         inputs = make_variables(inputs)
-
-        outputs = run_forward_pass(net, inputs, activation)
+        if intermediate:
+            outputs = run_forward_pass(net, inputs, activation)
+        else:
+            outputs = run_forward_intermediate(net, inputs, activation)
         print("in forward, type of outputs", type(outputs))
         #print("in forward, output[0]", outputs[0])
         
@@ -54,6 +56,14 @@ def run_forward_pass(net, inputs, activation=None):
 
     return outputs
 
+def run_forward_intermediate(net, inputs, activation=None):
+    
+    outputs = net.forward_intermediate(*inputs)
+
+    if activation is not None:
+        outputs = list(map( activation, outputs ))
+
+    return outputs
 
 def push_outputs(scanner, outputs, scan_spec):
 
