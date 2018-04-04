@@ -111,7 +111,7 @@ def save_output(output, dset_name, chkpt_num, fwd_dir, output_tag, **params):
         #print(type(output.outputs))
         #print(output.outputs.keys())
         print(k)
-        output_data = output['k']
+        output_data = output[k]
 
         if len(output_tag) == 0:
             basename = "{}_{}_{}.h5".format("golden", k, chkpt_num)
