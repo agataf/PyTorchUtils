@@ -31,7 +31,7 @@ def forward(net, scanner, scan_spec, intermediate=False, activation=None):
         #print("in forward, output[0]", outputs[0])
         
         
-        fmt_outputs push_outputs(scanner, outputs, scan_spec, intermediate)
+        fmt_outputs= push_outputs(scanner, outputs, scan_spec, intermediate)
 
         end = time.time()
         print("Elapsed: %3f" % (end-start))
