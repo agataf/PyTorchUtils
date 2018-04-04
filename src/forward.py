@@ -25,15 +25,13 @@ def forward(net, scanner, scan_spec, intermediate=False, activation=None):
           break
 
         inputs = make_variables(inputs)
-        if intermediate:
-            outputs = run_forward_intermediate(net, inputs, activation)
-        else:
-            outputs = run_forward_pass(net, inputs, activation)
+        outputs = run_forward(net, inputs, activation, intermediate)
+
         print("in forward, type of outputs", type(outputs))
         #print("in forward, output[0]", outputs[0])
         
 
-        push_outputs(scanner, outputs, scan_spec)
+        push_outputs(scanner, outputs, scan_spec, intermediate)
 
         end = time.time()
         print("Elapsed: %3f" % (end-start))
@@ -47,29 +45,28 @@ def make_variables(inputs):
     return [ utils.make_variable(arr, volatile=True) for arr in expanded ]
 
 
-def run_forward_pass(net, inputs, activation=None):
+def run_forward_pass(net, inputs, activation=None, intermediate=False):
     
     outputs = net(*inputs)
-
-    if activation is not None:
-        outputs = list(map( activation, outputs ))
+    if not intermediate:
+        if activation is not None:
+            outputs = list(map( activation, outputs ))
 
     return outputs
 
-def run_forward_intermediate(net, inputs, activation=None):
-    
-    outputs = net(*inputs)
-    print(outputs.keys())
 
-    return outputs
-
-def push_outputs(scanner, outputs, scan_spec):
+def push_outputs(scanner, outputs, scan_spec, intermediate):
 
     fmt_outputs = {}
     #print("scan spec keys", scan_spec.keys())
-    for (i,k) in enumerate(scan_spec.keys()):
-        #print("extract data shape", extract_data(outputs[i]).shape)
-        fmt_outputs[k] = extract_data(outputs[i])
+    if intermediate:
+        for k in outputs.keys():
+            #print("extract data shape", extract_data(outputs[i]).shape)
+            fmt_outputs[k] = extract_data(outputs[k])
+    else:
+        for (i,k) in enumerate(scan_spec.keys()):
+            #print("extract data shape", extract_data(outputs[i]).shape)
+            fmt_outputs[k] = extract_data(outputs[i])
 
     scanner.push(fmt_outputs)
 
