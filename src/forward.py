@@ -56,7 +56,7 @@ def run_forward_pass(net, inputs, activation=None):
 
     return outputs
 
-def run_forward_pass(net, inputs, activation=None):
+def run_forward_intermediate(net, inputs, activation=None):
     
     outputs = net(*inputs)
     print(outputs.keys())
