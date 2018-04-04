@@ -107,10 +107,10 @@ def make_forward_scanner(dset_name, data_dir, input_spec,
 
 def save_output(output, dset_name, chkpt_num, fwd_dir, output_tag, **params):
     """ Saves the volumes within a DataProvider ForwardScanner """
-
     for k in output.outputs.data.iterkeys():
         #print(type(output.outputs))
         #print(output.outputs.keys())
+        print(k)
         output_data = output.outputs.get_data(k)
 
         if len(output_tag) == 0:
