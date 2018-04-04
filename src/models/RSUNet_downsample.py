@@ -249,6 +249,7 @@ class Model(nn.Module):
 
 
   def forward(self, x):
+    print("in regular forward")
          
     downsample = getattr(self, "downsample")
     x = downsample(x)
@@ -285,6 +286,7 @@ class Model(nn.Module):
 
   def forward_intermediate(self, x):
                   
+    print("in intermediate")
     intermediates = {}   
     downsample = getattr(self, "downsample")
     x = downsample(x)
