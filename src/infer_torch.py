@@ -29,7 +29,7 @@ def main(noeval, **args):
 
         fs = make_forward_scanner(dset, **params)
 
-        output = forward.forward(net, fs, params["scan_spec"],
+        output = forward.forward(net, fs, params["scan_spec"],intermediate=True,
                                  activation=params["activation"])
 
         save_output(output, dset, **params)
@@ -42,7 +42,7 @@ def fill_params(expt_name, chkpt_num, gpus,
 
     #Model params
     params["in_dim"]      = 1
-    params["output_spec"] = collections.OrderedDict(psd_label=1, deconv1=1)
+    params["output_spec"] = collections.OrderedDict(psd_label=1)
     params["depth"]       = 4
     params["batch_norm"]  = not(nobn)
     params["activation"]  = F.sigmoid
