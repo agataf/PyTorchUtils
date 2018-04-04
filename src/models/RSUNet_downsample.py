@@ -283,3 +283,42 @@ class Model(nn.Module):
 
     return self.outputdeconv(x)
 
+  def forward_intermediate(self, x):
+                  
+    intermediates = {}   
+    downsample = getattr(self, "downsample")
+    x = downsample(x)
+    intermediates["downsample"] = x
+    # Input feature embedding without batchnorm
+    x = self.inputconv(x)
+    intermediates["inputconv"] = x
+    # Contracting pathway
+    skip = []
+    for d in range(self.depth):
+      convmod = getattr(self, "convmod{}".format(d))
+      maxpool = getattr(self, "maxpool{}".format(d+1))
+      cd = convmod(x)
+      x = maxpool(cd)
+         
+      intermediates["convmod{}".format(d)] = cd
+      intermediates["maxpool{}".format(d+1)] = x
+      skip.append(cd)
+
+    # Bridge
+    bridge = getattr(self, "convmod{}".format(self.depth))
+    x = bridge(x)
+    intermediates["convmod{}".format(self.depth)] = x
+    # Expanding pathway
+    for d in reversed(range(self.depth)): 
+      deconv = getattr(self, "deconv{}".format(d))
+      x = deconv(x, skip[d])
+      intermediates["deconv{}".format(d)] = x
+    # Output feature embedding without batchnorm
+    x = self.embedconv(x)
+    intermediates["embedconv"] = x
+    upsample = getattr(self, "upsample")
+    x = upsample(x)
+    intermediates["upsample"] = x
+    intermediates["outputdeconv"] = self.outputdeconv(x)
+
+    return intermediates
