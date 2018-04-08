@@ -45,9 +45,9 @@ class Sampler(object):
       for dset in dsets:
         vdp.add_dataset( self.build_dataset(datadir, spec, dset) )
       if mode == "train":
-          vdp.set_sampling_weights([0.5, 0.1, 0.025, 0.1, 0.1, 0.025, 0.025, 0.025, 0.1])
+          vdp.set_sampling_weights([1/6., 1/6., 1/6., 1/6., 1/6., 1/6.])
       if mode == "val":
-          vdp.set_sampling_weights([0.5, 0.15, 0.05, 0.1, 0.1])
+          vdp.set_sampling_weights([0.5, 0.5])
       vdp.set_augmentor(self._aug(mode))
       vdp.set_postprocessor(self._post())
 
