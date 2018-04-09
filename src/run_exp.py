@@ -143,7 +143,7 @@ if __name__ == "__main__":
                         help="Checkpoint Number")
     parser.add_argument("--gpus", default=["0"], nargs="+")
     parser.add_argument("--lr", type=float, default=0.001)
-    parser.add_argument("--erode", type=bool, default=False)
+    parser.add_argument("--erode", type=int, default=0)
     parser.add_argument("--resize", type=int, default=1,
                        help="How many times to resize the input?")
     args = parser.parse_args()
