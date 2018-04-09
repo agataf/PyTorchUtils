@@ -62,7 +62,7 @@ def fill_params(expt_name, chkpt_num, gpus,
 
     #Dataset params
     params["data_dir"]    = os.path.expanduser(
-                            "~/seungmount/research/agataf/datasets/pinky_all")
+                            "~/seungmount/research/agataf/datasets/pinky_mip_1")
     assert os.path.isdir(params["data_dir"]),"nonexistent data directory"
     params["dsets"]       = dset_names
     params["input_spec"]  = collections.OrderedDict(input=(16,320,320)) #dp dataset spec
@@ -141,7 +141,7 @@ if __name__ == "__main__":
                         help="Model Template Filename")
     parser.add_argument("chkpt_num", type=int,
                         help="Checkpoint Number")
-    parser.add_argument("--dset_names", default = ["chunk_19585-21632_22657-24704_4003-4258.omni"], nargs="+",	
+    parser.add_argument("--dset_names", default = ["vol503_train"], nargs="+",	
                         help="Inference Dataset Names")
     parser.add_argument("--nobn", action="store_true",
                         help="Whether net uses batch normalization")
