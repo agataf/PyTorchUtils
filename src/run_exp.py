@@ -59,14 +59,16 @@ def fill_params(expt_name, chkpt_num, batch_sz, lr, gpus,
     #Sampling params
     params["data_dir"]     = os.path.expanduser("~/seungmount/research/agataf/datasets/pinky_mip_1")
     assert os.path.isdir(params["data_dir"]),"nonexistent data directory"
-    train_vol_list = ["stitched_vol19-vol34_train", "stitched_vol40-vol41_train",  "vol101_train", "vol102_train", "vol103_train", "vol104_train"]#, "vol501_train", "vol502_train", "vol503_train"]
-    val_vol_list = ["stitched_vol19-vol34_val", "stitched_vol40-vol41_val"]#, "vol501_val", "vol502_val", "vol503_val"]
+    train_vol_list = ["stitched_vol19-vol34_train", "stitched_vol40-vol41_train",  "vol101_train", "vol102_train", "vol103_train", "vol104_train", "vol501_train", "vol502_train", "vol503_train"]
+    val_vol_list = ["stitched_vol19-vol34_val", "stitched_vol40-vol41_val", "vol501_val", "vol502_val", "vol503_val"]
+    params["erode"] = erode
     if erode:
         params["train_sets"]   = [el+"_1erode" for el in train_vol_list]
         params["val_sets"]   = [el+"_1erode" for el in val_vol_list]
     else:
         params["train_sets"]   = train_vol_list
         params["val_sets"]   = val_vol_list
+    
 
     #GPUS
     params["gpus"] = gpus
@@ -96,7 +98,7 @@ def fill_params(expt_name, chkpt_num, batch_sz, lr, gpus,
 
 
 def start_training(model_class, model_args, model_kwargs, chkpt_num,
-                   lr, train_sets, val_sets, data_dir, **params):
+                   lr, train_sets, val_sets, data_dir, erode, **params):
 
     #PyTorch Model
     net = utils.create_network(model_class, model_args, model_kwargs)
@@ -111,10 +113,10 @@ def start_training(model_class, model_args, model_kwargs, chkpt_num,
     #DataProvider Sampler
     Sampler = params["sampler_class"]
     train_sampler = utils.AsyncSampler(Sampler(data_dir, dsets=train_sets,
-                                               mode="train", patchsz=(16,160,160)))
+                                               mode="train", erode, patchsz=(16,160,160)))
 
     val_sampler   = utils.AsyncSampler(Sampler(data_dir, dsets=val_sets,
-                                               mode="val", patchsz=(16,160,160)))
+                                               mode="val", erode, patchsz=(16,160,160)))
 
     loss_fn = loss.BinomialCrossEntropyWithLogits()
     optimizer = torch.optim.Adam( net.parameters(), lr=lr )
