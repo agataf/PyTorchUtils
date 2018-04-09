@@ -141,7 +141,7 @@ if __name__ == "__main__":
                         help="Model Template Filename")
     parser.add_argument("chkpt_num", type=int,
                         help="Checkpoint Number")
-    parser.add_argument("--dset_names", default = "chunk_19585-21632_22657-24704_4003-4258.omni", nargs="+",	
+    parser.add_argument("--dset_names", default = "[chunk_19585-21632_22657-24704_4003-4258.omni]", nargs="+",	
                         help="Inference Dataset Names")
     parser.add_argument("--nobn", action="store_true",
                         help="Whether net uses batch normalization")
