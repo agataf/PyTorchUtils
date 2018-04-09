@@ -90,8 +90,8 @@ def make_forward_scanner(dset_name, data_dir, input_spec,
 
     # Reading EM image
 #    img = utils.read_h5(dset_name)
-    dset_name = "chunk_19585-21632_22657-24704_4003-4258.omni"
-    print("image path", os.path.join(data_dir, "chunk_19585-21632_22657-24704_4003-4258.omni_img.h5"))
+
+    print("image path", os.path.join(data_dir, dset_name + "_img.h5"))
     img = utils.read_h5(os.path.join(data_dir, dset_name + "_img.h5"))[:16,:160,:160]
     print("image dimensions", img.shape)
     img = (img / 255.).astype("float32")
@@ -141,6 +141,8 @@ if __name__ == "__main__":
                         help="Model Template Filename")
     parser.add_argument("chkpt_num", type=int,
                         help="Checkpoint Number")
+    parser.add_argument("--dset_names", default = "chunk_19585-21632_22657-24704_4003-4258.omni", nargs="+",	
+                        help="Inference Dataset Names")
     parser.add_argument("--nobn", action="store_true",
                         help="Whether net uses batch normalization")
     parser.add_argument("--gpus", default=["0"], nargs="+")
