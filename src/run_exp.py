@@ -57,7 +57,7 @@ def fill_params(expt_name, chkpt_num, batch_sz, lr, gpus,
     params["resize"]    = resize
 
     #Sampling params
-    params["data_dir"]     = os.path.expanduser("~/seungmount/research/agataf/datasets/pinky_mip1")
+    params["data_dir"]     = os.path.expanduser("~/seungmount/research/agataf/datasets/pinky_mip_1")
     assert os.path.isdir(params["data_dir"]),"nonexistent data directory"
     train_vol_list = ["stitched_vol19-vol34_train", "stitched_vol40-vol41_train",  "vol101_train", "vol102_train", "vol103_train", "vol104_train"]#, "vol501_train", "vol502_train", "vol503_train"]
     val_vol_list = ["stitched_vol19-vol34_val", "stitched_vol40-vol41_val"]#, "vol501_val", "vol502_val", "vol503_val"]
