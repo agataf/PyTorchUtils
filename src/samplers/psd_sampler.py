@@ -62,8 +62,8 @@ class Sampler(object):
       if erode:
         mit_str = "_"+str(erode)+"erode"+"_mit.h5"
       mit = read_file(os.path.join(datadir, dset_name + mit_str)).astype("float32")
-      print(img.shape)
-      print(mit.shape)
+#       print(img.shape)
+#       print(mit.shape)
 #      seg = read_file(os.path.join(datadir, dset_name + "_seg.h5"))
 
       img = dp.transform.divideby(img, val=255.0, dtype="float32")
