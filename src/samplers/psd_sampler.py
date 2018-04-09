@@ -59,6 +59,8 @@ class Sampler(object):
       print(dset_name)
       img = read_file(os.path.join(datadir, dset_name + "_img.h5"))
       mit = read_file(os.path.join(datadir, dset_name + "_mit.h5")).astype("float32")
+      print(img.shape)
+      print(mit.shape)
 #      seg = read_file(os.path.join(datadir, dset_name + "_seg.h5"))
 
       img = dp.transform.divideby(img, val=255.0, dtype="float32")
