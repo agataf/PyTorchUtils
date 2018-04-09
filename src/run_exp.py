@@ -111,10 +111,10 @@ def start_training(model_class, model_args, model_kwargs, chkpt_num,
     #DataProvider Sampler
     Sampler = params["sampler_class"]
     train_sampler = utils.AsyncSampler(Sampler(data_dir, dsets=train_sets,
-                                               mode="train"))
+                                               mode="train", patchsz=(16,160,160)))
 
     val_sampler   = utils.AsyncSampler(Sampler(data_dir, dsets=val_sets,
-                                               mode="val"))
+                                               mode="val", patchsz=(16,160,160)))
 
     loss_fn = loss.BinomialCrossEntropyWithLogits()
     optimizer = torch.optim.Adam( net.parameters(), lr=lr )
