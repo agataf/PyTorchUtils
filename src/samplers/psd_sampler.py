@@ -22,7 +22,7 @@ def read_file(fname):
 
 class Sampler(object):
 
-    def __init__(self, datadir, dsets=[], mode="train", patchsz=(16,160,160)):
+    def __init__(self, datadir, dsets=[], mode="train", erode=0, patchsz=(16,160,160)):
 
       assert mode in ["train","val","test"]
 
@@ -31,19 +31,19 @@ class Sampler(object):
       volnames = ["input","psd_label"]
       spec = { name : patchsz for name in volnames }
 
-      self.dp = self.build_data_provider(datadir, spec, mode, dsets)
+      self.dp = self.build_data_provider(datadir, spec, mode, dsets, erode)
 
 
     def __call__(self, **kwargs):
       return self.dp("random", **kwargs)
 
 
-    def build_data_provider(self, datadir, spec, mode, dsets):
+    def build_data_provider(self, datadir, spec, mode, dsets, erode):
 
       vdp = dp.VolumeDataProvider()
 
       for dset in dsets:
-        vdp.add_dataset( self.build_dataset(datadir, spec, dset) )
+        vdp.add_dataset( self.build_dataset(datadir, spec, dset, erode) )
       if mode == "train":
           vdp.set_sampling_weights([15, 5, 2, 1, 1, 1]+[1]*(len(dsets)-6))
       if mode == "val":
@@ -54,11 +54,14 @@ class Sampler(object):
       return vdp
 
 
-    def build_dataset(self, datadir, spec, dset_name):
-
+    def build_dataset(self, datadir, spec, dset_name, erode):
+      
       print(dset_name)
       img = read_file(os.path.join(datadir, dset_name + "_img.h5"))
-      mit = read_file(os.path.join(datadir, dset_name + "_mit.h5")).astype("float32")
+      mit_str = "_mit.h5"
+      if erode:
+        mit_str = "_erode"+str(erode)+"_mit.h5"
+      mit = read_file(os.path.join(datadir, dset_name + mit_str)).astype("float32")
       print(img.shape)
       print(mit.shape)
 #      seg = read_file(os.path.join(datadir, dset_name + "_seg.h5"))
