@@ -26,11 +26,7 @@ def forward(net, scanner, scan_spec, intermediate=False, activation=None):
 
         inputs = make_variables(inputs)
         outputs = run_forward_pass(net, inputs, activation, intermediate)
-
-        print("in forward, type of outputs", type(outputs))
-        #print("in forward, output[0]", outputs[0])
-        
-        
+                
         fmt_outputs= push_outputs(scanner, outputs, scan_spec, intermediate)
 
         end = time.time()
@@ -60,18 +56,14 @@ def run_forward_pass(net, inputs, activation=None, intermediate=False):
 def push_outputs(scanner, outputs, scan_spec, intermediate):
 
     fmt_outputs = {}
-    #print("scan spec keys", scan_spec.keys())
     if intermediate:
         for k in outputs.keys():
-            #print("extract data shape", extract_data(outputs[i]).shape)
-            print(k)
             if k=='outputdeconv':
                 outputs[k] = outputs[k][0]
             fmt_outputs[k] = extract_data(outputs[k])
         return fmt_outputs
     else:
         for (i,k) in enumerate(scan_spec.keys()):
-            #print("extract data shape", extract_data(outputs[i]).shape)
             fmt_outputs[k] = extract_data(outputs[i])
             scanner.push(fmt_outputs)
 
@@ -79,5 +71,4 @@ def push_outputs(scanner, outputs, scan_spec, intermediate):
 
 
 def extract_data(expanded_variable):
-    #print(expanded_variable)
     return np.squeeze( expanded_variable.data.cpu().numpy(), axis=(0,) )
