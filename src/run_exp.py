@@ -59,8 +59,8 @@ def fill_params(expt_name, chkpt_num, batch_sz, lr, gpus,
     #Sampling params
     params["data_dir"]     = os.path.expanduser("~/seungmount/research/agataf/datasets/pinky_mip_1")
     assert os.path.isdir(params["data_dir"]),"nonexistent data directory"
-    train_vol_list = ["stitched_vol19-vol34_train", "stitched_vol40-vol41_train",  "vol101_train", "vol102_train", "vol103_train", "vol104_train", "vol401_train", "vol501_train", "vol502_train", "vol503_train"]
-    val_vol_list = ["stitched_vol19-vol34_val", "stitched_vol40-vol41_val", "vol401_train", "vol501_val", "vol502_val", "vol503_val"]
+    train_vol_list = ["stitched_vol19-vol34_train", "vol101_train", "vol102_train", "vol103_train", "vol104_train", "vol401_train", "vol501_train", "vol502_train", "vol503_train"] #"stitched_vol40-vol41_train"
+    val_vol_list = ["stitched_vol19-vol34_val", "vol401_train", "vol501_val", "vol502_val", "vol503_val"] # "stitched_vol40-vol41_val",
     params["erode"] = erode
 #     if erode:
 #         params["train_sets"]   = [el+"_1erode" for el in train_vol_list]
